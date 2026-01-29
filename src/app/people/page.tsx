@@ -164,7 +164,7 @@ export default function PeoplePage() {
                 <option value="">Vælg...</option>
                 <option value="male">Mand</option>
                 <option value="female">Kvinde</option>
-                <option value="other">Netto Pose</option>
+                <option value="other">Omvendt Netto Pose</option>
               </select>
             </div>
           </div>
