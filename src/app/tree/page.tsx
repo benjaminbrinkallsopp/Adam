@@ -193,19 +193,19 @@ export default function TreePage() {
     const maxX = Math.max(...allPositions.map((p) => p.x + NODE_WIDTH / 2)) + 40;
     const maxY = Math.max(...allPositions.map((p) => p.y + NODE_HEIGHT)) + 40;
 
-    // Build parent-child lines
+    // Build lines from ALL relationships, not just tree structure
+    const positionMap = new Map(allPositions.map((p) => [p.node.person.id, p]));
     const lines: { x1: number; y1: number; x2: number; y2: number }[] = [];
-    for (const pos of allPositions) {
-      for (const child of pos.node.children) {
-        const childPos = allPositions.find((p) => p.node.person.id === child.person.id);
-        if (childPos) {
-          lines.push({
-            x1: pos.x,
-            y1: pos.y + NODE_HEIGHT,
-            x2: childPos.x,
-            y2: childPos.y,
-          });
-        }
+    for (const rel of relationships) {
+      const parentPos = positionMap.get(rel.parentId);
+      const childPos = positionMap.get(rel.childId);
+      if (parentPos && childPos) {
+        lines.push({
+          x1: parentPos.x,
+          y1: parentPos.y + NODE_HEIGHT,
+          x2: childPos.x,
+          y2: childPos.y,
+        });
       }
     }
 
